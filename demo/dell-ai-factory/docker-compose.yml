@@ -1,0 +1,60 @@
+# Dell AI Factory Simulation Stack
+# Mimics Dell PowerEdge XE‑equivalent resource constraints for validation
+version: "3.9"
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: cortex-dell-db
+    environment:
+      POSTGRES_USER: cortex
+      POSTGRES_PASSWORD: cortex
+      POSTGRES_DB: cortex_dell
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cortex -d cortex_dell"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+
+  cortex:
+    build:
+      context: ../..
+      dockerfile: demo/Dockerfile
+    container_name: cortex-dell
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://cortex:cortex@db:5432/cortex_dell
+      CORTEX_LICENSE: dell-validation
+      DEMO_INDUSTRY: energy_utilities
+      RUST_LOG: cortex=info
+    ports:
+      - "8787:8787"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8787/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:

@@ -1,0 +1,16 @@
+[package]
+name = "cortex-aat"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-core = { path = "../cortex-core" }
+cortex-provenance = { path = "../cortex-provenance" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+ed25519-dalek = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }

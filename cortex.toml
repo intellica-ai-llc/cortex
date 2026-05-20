@@ -1,0 +1,21 @@
+[license]
+key = "cortex-ent-2026-0001"
+customer = "acme-corp"
+plan = "enterprise"
+seats = 500
+connectors = "unlimited"
+features = [
+    "council_full",
+    "provenance_gold",
+    "vap_compliance",
+    "nerc_cip",
+    "schema_grounding",
+    "observational_capture",
+    "weaning_engine",
+    "cross_device_sync"
+]
+expires = "2027-05-07"
+signature = "ed25519:..."
+
+[database]
+url = "postgresql://localhost:5432/cortex"

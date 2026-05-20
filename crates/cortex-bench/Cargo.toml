@@ -1,0 +1,14 @@
+[package]
+name = "cortex-bench"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-validate = { path = "../cortex-validate" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }

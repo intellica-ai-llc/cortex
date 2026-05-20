@@ -1,0 +1,17 @@
+[package]
+name = "cortex-due-diligence"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-self-validate = { path = "../cortex-self-validate" }
+cortex-provenance = { path = "../cortex-provenance" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+blake3 = { workspace = true }
+hex = { workspace = true }

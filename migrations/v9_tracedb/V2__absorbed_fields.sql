@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS absorbed_fields (
+    field_id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    source_application  TEXT NOT NULL,
+    source_database     TEXT NOT NULL,
+    source_schema       TEXT NOT NULL,
+    source_table        TEXT NOT NULL,
+    source_column       TEXT NOT NULL,
+    semantic_label      TEXT,
+    field_description   TEXT,
+    embedding           VECTOR(1536),
+    ontology_category   TEXT,
+    field_type          TEXT NOT NULL,
+    field_length        INTEGER,
+    is_nullable         BOOLEAN DEFAULT TRUE,
+    validation_rules    JSONB,
+    first_observed_at   TIMESTAMPTZ,
+    last_observed_at    TIMESTAMPTZ,
+    observation_count   INTEGER DEFAULT 0,
+    unique_users        INTEGER DEFAULT 0,
+    absorption_status   TEXT DEFAULT 'observing'
+                        CHECK (absorption_status IN ('observing','mirroring','absorbed','genesis','replaced','retired')),
+    cdc_connector_id    TEXT,
+    cdc_sync_started    TIMESTAMPTZ,
+    cdc_last_sync       TIMESTAMPTZ,
+    cdc_sync_latency_ms INTEGER,
+    cortex_table        TEXT,
+    cortex_column       TEXT,
+    schema_version      INTEGER DEFAULT 1,
+    last_schema_change  TIMESTAMPTZ,
+    evolution_history   JSONB,
+    contains_pii        BOOLEAN DEFAULT FALSE,
+    pii_type            TEXT,
+    retention_policy    TEXT,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE(source_application, source_database, source_schema, source_table, source_column)
+);
+CREATE INDEX IF NOT EXISTS idx_af_source ON absorbed_fields(source_application, source_table);
+CREATE INDEX IF NOT EXISTS idx_af_status ON absorbed_fields(absorption_status);
+CREATE INDEX IF NOT EXISTS idx_af_embedding ON absorbed_fields USING ivfflat(embedding vector_cosine_ops);

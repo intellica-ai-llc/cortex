@@ -1,0 +1,15 @@
+[package]
+name = "cortex-publish"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-validate = { path = "../cortex-validate" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+blake3 = { workspace = true }
+hex = { workspace = true }

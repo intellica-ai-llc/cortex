@@ -1,0 +1,13 @@
+[package]
+name = "cortex-mesh"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-core = { path = "../cortex-core" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }

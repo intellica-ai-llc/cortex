@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cortex MLP Demo – Self-Guided Journey</title>
+<style>
+:root {
+  --bg: oklch(0.98 0 0);
+  --fg: oklch(0.12 0 0);
+  --accent: oklch(0.55 0.22 264);
+  --card-bg: oklch(1 0 0);
+  --border: oklch(0.88 0 0);
+  --radius: 12px;
+  --shadow: 0 1px 3px oklch(0 0 0 / 0.08);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0; padding: 0;
+}
+@media (prefers-color-scheme:dark) {
+  :root { --bg: oklch(0.12 0 0); --fg: oklch(0.95 0 0); --card-bg: oklch(0.16 0 0); --border: oklch(0.24 0 0); }
+}
+body { max-width: 960px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+.subtitle { color: oklch(0.55 0 0); margin-bottom: 2rem; }
+.acts { display: flex; flex-direction: column; gap: 1.5rem; }
+.act { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }
+.act h2 { margin: 0 0 0.5rem 0; font-size: 1.25rem; }
+.act .duration { color: oklch(0.50 0 0); font-size: 0.825rem; margin-bottom: 1rem; }
+.act .content { line-height: 1.6; }
+.cta-bar { position: sticky; bottom: 0; background: var(--card-bg); border-top: 1px solid var(--border); padding: 1rem 2rem; text-align: center; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.cta-btn { display: inline-block; padding: 0.75rem 2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; cursor: pointer; }
+.cta-primary { background: var(--accent); color: #fff; }
+.cta-secondary { background: var(--bg); border: 2px solid var(--accent); color: var(--accent); }
+.footer-sovereignty { text-align: center; color: oklch(0.50 0 0); font-size: 0.85rem; padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+<h1>Intellecta Cortex — MLP Demo</h1>
+<p class="subtitle">Self-guided interactive journey. Explore the sovereign enterprise AI control plane.</p>
+
+<div class="acts">
+  <div class="act" id="act0">
+    <h2>Act 0 — Cryptographic Proof (60s)</h2>
+    <p class="duration">⏱ ~1 minute</p>
+    <div class="content">
+      <p>Open the Provenance Explorer. 500 TraceCaps capsules, each Ed25519-signed, Merkle-chained, SCITT-anchored.</p>
+      <p><strong>No other enterprise AI platform can show you this.</strong></p>
+      <a href="#" class="cta-btn cta-secondary" onclick="alert('Provenance Explorer with 500 capsules')">Open Provenance Explorer →</a>
+    </div>
+  </div>
+
+  <div class="act" id="act1">
+    <h2>Act 1 — The Insight Question (90s)</h2>
+    <p class="duration">⏱ ~1.5 minutes</p>
+    <div class="content">
+      <p>Ask: <em>"Show me all assets that had unplanned downtime in Q1, total maintenance cost, and whether the PM schedule is current."</em></p>
+      <p>Three seconds. Three systems queried. One answer. <strong>$847K unplanned downtime cost.</strong></p>
+      <a href="#" class="cta-btn cta-secondary" onclick="alert('Command Bar: cross-system query executed')">Ask the Question →</a>
+    </div>
+  </div>
+
+  <div class="act" id="act2">
+    <h2>Act 2 — The Proof (30s)</h2>
+    <p class="duration">⏱ ~30 seconds</p>
+    <div class="content">
+      <p>Every system queried, every field accessed, every answer provided — <strong>cryptographically proven</strong>.</p>
+      <p>EU AI Act Article 12 satisfied by architectural design.</p>
+    </div>
+  </div>
+
+  <div class="act" id="act3">
+    <h2>Act 3 — Sovereignty (30s)</h2>
+    <p class="duration">⏱ ~30 seconds</p>
+    <div class="content">
+      <p>Everything runs on <strong>this server</strong>. No cloud. Zero data has left this machine.</p>
+    </div>
+  </div>
+
+  <div class="act" id="act4">
+    <h2>Act 4 — Silent Absorption (90s)</h2>
+    <p class="duration">⏱ ~1.5 minutes</p>
+    <div class="content">
+      <p>Watch as Cortex <strong>observes, absorbs, and replaces</strong> legacy application workflows — without users noticing.</p>
+      <a href="#" class="cta-btn cta-secondary" onclick="alert('Absorption dashboard: Maximo 47% absorbed')">View Absorption Dashboard →</a>
+    </div>
+  </div>
+
+  <div class="act" id="act5">
+    <h2>Act 5 — Deploy (30s)</h2>
+    <p class="duration">⏱ ~30 seconds</p>
+    <div class="content">
+      <p>One command. Your hardware. Your data. Your control.</p>
+      <pre style="background:oklch(0.08 0 0);color:oklch(0.85 0.20 142);padding:1rem;border-radius:8px;overflow-x:auto;">curl -fsSL https://install.intellica.io | bash</pre>
+    </div>
+  </div>
+</div>
+
+<div class="cta-bar">
+  <a href="#" class="cta-btn cta-primary" onclick="alert('Install command copied!')">🚀 Deploy in Your Environment</a>
+  <a href="#" class="cta-btn cta-secondary" onclick="alert('Book a 15-minute call')">📅 Book Live Demo</a>
+  <a href="#" class="cta-btn cta-secondary" onclick="alert('Docs opened')">📖 Read Documentation</a>
+</div>
+
+<div class="footer-sovereignty">
+  🏰 Running on‑premise. Zero data has left this server. All processing local.<br>
+  18‑component A2UI v0.9 • WCAG 2.2 AA • Ed25519 + Merkle provenance • SCITT‑anchored
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+pub mod sap;
+pub mod oracle;
+pub mod salesforce;
+pub mod workday;
+pub mod netsuite;
+pub mod dynamics365;
+pub mod servicenow;
+pub mod snowflake;
+pub mod jira;
+pub mod github;
+pub mod slack;
+pub mod teams;
+pub mod sharepoint;
+pub mod confluence;

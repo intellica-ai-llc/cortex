@@ -1,0 +1,15 @@
+[package]
+name = "cortex-replace"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-core = { path = "../cortex-core" }
+cortex-tracedb = { path = "../cortex-tracedb" }
+cortex-interface = { path = "../cortex-interface" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }

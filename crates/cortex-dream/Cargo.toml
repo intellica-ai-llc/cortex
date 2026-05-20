@@ -1,0 +1,18 @@
+[package]
+name = "cortex-dream"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-core = { path = "../cortex-core" }
+cortex-memory = { path = "../cortex-memory" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+ed25519-dalek = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }

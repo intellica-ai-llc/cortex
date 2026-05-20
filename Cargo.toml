@@ -1,0 +1,88 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/cortex-core",
+    "crates/cortex-gateway",
+    "crates/cortex-provenance",
+    "crates/cortex-security",
+    "crates/cortex-guard",
+    "crates/cortex-council",
+    "crates/cortex-integration",
+    "crates/cortex-interface",
+    "crates/cortex-tracedb",
+    "crates/cortex-mirror",
+    "crates/cortex-absorb",
+    "crates/cortex-genesis",
+    "crates/cortex-replace",
+    "crates/cortex-retire",
+    "crates/cortex-pulse",
+    "crates/cortex-whisper",
+    "crates/cortex-deep-research",
+    "crates/cortex-coggen",
+    "crates/cortex-iter-research",
+    "crates/cortex-rl-bootstrapper",
+    "crates/cortex-research-swarm",
+    "crates/cortex-aat",
+    "crates/cortex-converge",
+    "crates/cortex-forge",
+    "crates/cortex-mesh",
+    "crates/cortex-mobile",
+    "crates/cortex-knowledge-snap",
+    "crates/cortex-distribution",
+    "crates/cortex-onboarding",
+    "crates/cortex-testing",
+    "crates/cortex-marketplace",
+    "crates/cortex-cli",
+    "crates/cortex-observability",
+    "crates/cortex-dream",
+    "crates/cortex-memory",
+    "crates/cortex-intelligence",
+    "crates/cortex-document-intelligence",
+    "crates/lfab-core",
+    "crates/lfab-sleep",
+    "crates/cortex-vault",
+    "crates/cortex-validate",
+    "crates/cortex-self-validate",
+    "crates/cortex-due-diligence",
+    "crates/cortex-bench",
+    "crates/cortex-publish",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Proprietary (Core) / Apache-2.0 (Connectors)"
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+async-trait = "0.1"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+sha2 = "0.10"
+blake3 = "1"
+hex = "0.4"
+rand = "0.8"
+rand_distr = "0.4"
+regex = "1"
+axum = { version = "0.7", features = ["macros"] }
+sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "json"] }
+polars = { version = "0.42", features = ["lazy", "describe", "ndarray"] }
+arrow = { version = "52", features = ["ipc"] }
+statrs = "0.17"
+clap = { version = "4", features = ["derive"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+thiserror = "2"
+flate2 = "0.2"
+byteorder = "1"
+crc = "3"
+opentelemetry = { version = "0.23", features = ["metrics", "trace"] }
+opentelemetry-otlp = { version = "0.16", features = ["grpc-tonic"] }
+tracing-opentelemetry = "0.24"
+toml = "0.8"
+nalgebra = "0.33"

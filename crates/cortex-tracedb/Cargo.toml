@@ -1,0 +1,18 @@
+[package]
+name = "cortex-tracedb"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+cortex-core = { path = "../cortex-core" }
+cortex-provenance = { path = "../cortex-provenance" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+sqlx = { workspace = true }
+blake3 = { workspace = true }
+hex = { workspace = true }
