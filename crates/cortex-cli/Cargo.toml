@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+chrono = { workspace = true }
+axum = { workspace = true }
 cortex-core = { path = "../cortex-core" }
 cortex-gateway = { path = "../cortex-gateway" }
 cortex-provenance = { path = "../cortex-provenance" }

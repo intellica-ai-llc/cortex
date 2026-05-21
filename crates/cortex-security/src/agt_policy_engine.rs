@@ -1,19 +1,10 @@
-use crate::SecurityError;
+#![allow(unused)]
+
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /// Microsoft Agent Governance Toolkit (AGT) policy engine bridge.
-///
-/// AGT (open-sourced April 2, 2026) is "an open-source runtime
-/// governance layer that sits between an MCP client and the tool
-/// servers it connects to"[reference:7], with "sub-millisecond
-/// enforcement"[reference:8].
-///
-/// This implementation mirrors AGT's core GovernanceKernel pattern:
-/// YAML-based policy, audit events, and OpenTelemetry integration,
-/// adapted to Cortex's Rust-native architecture.
 pub struct AGTPolicyEngine {
-    /// YAML/JSON policies indexed by policy name.
     policies: HashMap<String, Policy>,
 }
 
@@ -21,13 +12,9 @@ pub struct AGTPolicyEngine {
 pub struct Policy {
     pub name: String,
     pub description: String,
-    /// Tool name patterns this policy applies to.
     pub tool_patterns: Vec<String>,
-    /// Required parameter checks.
     pub param_checks: Vec<ParamCheck>,
-    /// Maximum risk score before HITL escalation.
     pub max_risk_threshold: f64,
-    /// Enforce or warn-only.
     pub enforcement: EnforcementMode,
 }
 
@@ -38,7 +25,7 @@ pub struct ParamCheck {
     pub value: serde_json::Value,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum ParamCheckType {
     Required,
@@ -48,7 +35,7 @@ pub enum ParamCheckType {
     AllowedValues(Vec<String>),
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum EnforcementMode {
     Enforce,
@@ -59,7 +46,6 @@ impl AGTPolicyEngine {
     pub fn new() -> Self {
         let mut policies = HashMap::new();
 
-        // Default policy: block all tools with system-manipulation patterns
         policies.insert("default-block-system-tags".into(), Policy {
             name: "default-block-system-tags".into(),
             description: "Blocks tool descriptors containing system manipulation tags".into(),
@@ -69,7 +55,6 @@ impl AGTPolicyEngine {
             enforcement: EnforcementMode::Enforce,
         });
 
-        // Default policy: require approval for destructive operations
         policies.insert("require-approval-destructive".into(), Policy {
             name: "require-approval-destructive".into(),
             description: "Requires HITL approval for destructive operations".into(),
@@ -85,44 +70,35 @@ impl AGTPolicyEngine {
         Self { policies }
     }
 
-    /// Evaluate a tool call against all applicable policies.
     pub fn evaluate(
         &self,
         tool_name: &str,
         params: &serde_json::Value,
         risk_score: f64,
-    ) -> Result<PolicyVerdict, SecurityError> {
-        let mut applicable = Vec::new();
-
+    ) -> Result<PolicyVerdict, super::SecurityError> {
         for policy in self.policies.values() {
             if policy.tool_patterns.iter().any(|pat| glob_match(pat, tool_name)) {
-                applicable.push(policy);
-            }
-        }
-
-        for policy in &applicable {
-            // Check parameter constraints
-            for check in &policy.param_checks {
-                let param_value = params.get(&check.field);
-                if !check_passes(check, param_value) {
-                    let msg = format!(
-                        "Policy '{}' parameter check failed for field '{}'",
-                        policy.name, check.field
-                    );
-                    if policy.enforcement == EnforcementMode::Enforce {
-                        return Ok(PolicyVerdict::Denied { policy: policy.name.clone(), reason: msg });
-                    } else {
-                        tracing::warn!("{}", msg);
+                for check in &policy.param_checks {
+                    let param_value = params.get(&check.field);
+                    if !check_passes(check, param_value) {
+                        let msg = format!(
+                            "Policy '{}' parameter check failed for field '{}'",
+                            policy.name, check.field
+                        );
+                        if policy.enforcement == EnforcementMode::Enforce {
+                            return Ok(PolicyVerdict::Denied { policy: policy.name.clone(), reason: msg });
+                        } else {
+                            tracing::warn!("{}", msg);
+                        }
                     }
                 }
-            }
 
-            // Check risk threshold
-            if risk_score > policy.max_risk_threshold {
-                return Ok(PolicyVerdict::RequiresApproval {
-                    policy: policy.name.clone(),
-                    risk_score,
-                });
+                if risk_score > policy.max_risk_threshold {
+                    return Ok(PolicyVerdict::RequiresApproval {
+                        policy: policy.name.clone(),
+                        risk_score,
+                    });
+                }
             }
         }
 
@@ -152,11 +128,13 @@ fn glob_match(pattern: &str, name: &str) -> bool {
 }
 
 fn check_passes(check: &ParamCheck, value: Option<&serde_json::Value>) -> bool {
-    match check.check_type {
+    match &check.check_type {
         ParamCheckType::Required => value.is_some(),
         ParamCheckType::AllowedValues(ref allowed) => {
-            value.map(|v| allowed.iter().any(|a| serde_json::to_string(a).ok().map(|s| v.to_string().contains(&s.trim_matches('"'))).unwrap_or(false))).unwrap_or(false)
+            value.map(|v| allowed.iter().any(|a| {
+                serde_json::to_string(a).ok().map(|s| v.to_string().contains(&s.trim_matches('"'))).unwrap_or(false)
+            })).unwrap_or(false)
         }
-        _ => true, // Simplified for now
+        _ => true,
     }
 }

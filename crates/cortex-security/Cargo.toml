@@ -4,8 +4,8 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+thiserror = { workspace = true }
 cortex-core = { path = "../cortex-core" }
-cortex-gateway = { path = "../cortex-gateway" }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

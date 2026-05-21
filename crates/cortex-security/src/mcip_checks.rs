@@ -1,3 +1,4 @@
+#![allow(unused_imports, dead_code, unused_variables)]
 use crate::SecurityError;
 use chrono::Utc;
 

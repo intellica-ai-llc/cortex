@@ -25,7 +25,6 @@ impl CortexRuntime {
     /// Bootstrap the entire Cortex platform from a config file.
     pub async fn initialize(config_path: Option<&str>) -> Result<Self, Box<dyn std::error::Error>> {
         // Install a basic tracing subscriber until the full one is up.
-        tracing_subscriber::fmt::init();
 
         let config = config::Config::load(config_path)?;
         let feature_gate = feature_gate::FeatureGate::from_license(&config.license)?;

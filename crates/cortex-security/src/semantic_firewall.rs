@@ -1,3 +1,4 @@
+#![allow(unused_imports, dead_code, unused_variables)]
 use crate::SecurityError;
 use regex::RegexSet;
 use blake3::Hasher;
@@ -132,7 +133,7 @@ impl SemanticFirewall {
         }
 
         ToolDescriptorScanResult {
-            risk_score: risk.min(1.0),
+            risk_score: (risk as f64).min(1.0),
             threats,
             passed: risk < 0.5,
         }

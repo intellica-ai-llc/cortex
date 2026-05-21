@@ -5,6 +5,8 @@ edition.workspace = true
 
 [dependencies]
 cortex-core = { path = "../cortex-core" }
+cortex-provenance = { path = "../cortex-provenance" }
+cortex-security = { path = "../cortex-security" }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

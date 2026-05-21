@@ -1,3 +1,4 @@
+#![allow(unused_imports, dead_code, unused_variables)]
 use crate::SecurityError;
 use ed25519_dalek::{SigningKey, VerifyingKey, Signature, Signer};
 use serde::{Deserialize, Serialize};

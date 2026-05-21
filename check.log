@@ -1,1 +1,61 @@
-phase_0.sh: line 227: cargo: command not found
+    Checking regex v1.12.3
+   Compiling clap_derive v4.6.1
+    Checking cortex-security v0.1.0 (/workspaces/cortex/crates/cortex-security)
+error[E0119]: conflicting implementations of trait `Debug` for type `EnforcementMode`
+  --> crates/cortex-security/src/agt_policy_engine.rs:53:10
+   |
+51 | #[derive(Debug, Clone, Serialize, Deserialize)]
+   |          ----- first implementation here
+52 | #[serde(rename_all = "snake_case")]
+53 | #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+   |          ^^^^^ conflicting implementation for `EnforcementMode`
+
+error[E0119]: conflicting implementations of trait `Clone` for type `EnforcementMode`
+  --> crates/cortex-security/src/agt_policy_engine.rs:53:17
+   |
+51 | #[derive(Debug, Clone, Serialize, Deserialize)]
+   |                 ----- first implementation here
+52 | #[serde(rename_all = "snake_case")]
+53 | #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+   |                 ^^^^^ conflicting implementation for `EnforcementMode`
+
+error[E0119]: conflicting implementations of trait `Serialize` for type `EnforcementMode`
+  --> crates/cortex-security/src/agt_policy_engine.rs:53:24
+   |
+51 | #[derive(Debug, Clone, Serialize, Deserialize)]
+   |                        --------- first implementation here
+52 | #[serde(rename_all = "snake_case")]
+53 | #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+   |                        ^^^^^^^^^ conflicting implementation for `EnforcementMode`
+   |
+   = note: this error originates in the derive macro `Serialize` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0119]: conflicting implementations of trait `Deserialize<'_>` for type `EnforcementMode`
+  --> crates/cortex-security/src/agt_policy_engine.rs:53:35
+   |
+51 | #[derive(Debug, Clone, Serialize, Deserialize)]
+   |                                   ----------- first implementation here
+52 | #[serde(rename_all = "snake_case")]
+53 | #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+   |                                   ^^^^^^^^^^^ conflicting implementation for `EnforcementMode`
+   |
+   = note: this error originates in the derive macro `Deserialize` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unused variable: `context`
+  --> crates/cortex-security/src/cabp_pipeline.rs:74:9
+   |
+74 |         context: &CABPContext,
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_context`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `required_plan`
+  --> crates/cortex-security/src/cabp_pipeline.rs:75:9
+   |
+75 |         required_plan: &str,
+   |         ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_required_plan`
+
+For more information about this error, try `rustc --explain E0119`.
+warning: `cortex-security` (lib) generated 2 warnings
+error: could not compile `cortex-security` (lib) due to 4 previous errors; 2 warnings emitted
+warning: build failed, waiting for other jobs to finish...
