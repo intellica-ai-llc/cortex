@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Intellecta Cortex — The Sovereign Control Plane for Enterprise AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d12;
+    --bg-elevated:#0e131b;
+    --surface:#141b27;
+    --surface-2:#1a2330;
+    --border:#232c3b;
+    --border-bright:#33415a;
+    --text:#eaf0f7;
+    --text-dim:#94a4bd;
+    --text-faint:#54637e;
+    --accent:#52ecb8;
+    --accent-dim:#2f8a6c;
+    --accent-soft:rgba(82,236,184,0.10);
+    --alert:#ff7a66;
+    --alert-soft:rgba(255,122,102,0.10);
+    --grid-line:rgba(255,255,255,0.035);
+    --radius:6px;
+    --maxw:1180px;
+    font-size:16px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-attachment: fixed;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.15;
+  }
+
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  a{color:inherit; text-decoration:none;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,13,18,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:1.05rem; letter-spacing:0.01em;
+  }
+  .brand .mark{
+    width:28px; height:28px; border:1px solid var(--accent);
+    border-radius:4px; position:relative; flex:none;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .brand .mark::before{
+    content:""; width:8px; height:8px; background:var(--accent);
+    box-shadow:0 0 10px var(--accent);
+  }
+  .brand small{
+    display:block; font-family:'JetBrains Mono', monospace;
+    font-weight:400; font-size:0.62rem; color:var(--text-faint);
+    letter-spacing:0.18em; margin-top:2px;
+  }
+  .nav-links{display:flex; gap:28px; align-items:center;}
+  .nav-links a{
+    font-size:0.875rem; color:var(--text-dim); transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{display:flex; gap:10px; align-items:center;}
+  @media (max-width:920px){
+    .nav-links{display:none;}
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:var(--radius);
+    font-size:0.875rem; font-weight:600; font-family:'Inter',sans-serif;
+    border:1px solid transparent; cursor:pointer; white-space:nowrap;
+    transition:all .15s ease;
+  }
+  .btn-primary{
+    background:var(--accent); color:#06120d;
+  }
+  .btn-primary:hover{background:#6cf2c6; box-shadow:0 0 0 4px var(--accent-soft);}
+  .btn-ghost{
+    background:transparent; color:var(--text); border-color:var(--border-bright);
+  }
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+  .btn-sm{padding:7px 14px; font-size:0.8rem;}
+  .btn-block{width:100%; justify-content:center;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);
+    border:1px solid var(--accent-dim); background:var(--accent-soft);
+    padding:6px 12px; border-radius:999px; margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent);}
+  .hero h1{
+    font-size:3.4rem; max-width:620px; margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal; color:var(--accent);
+  }
+  .hero p.lead{
+    font-size:1.1rem; color:var(--text-dim); max-width:540px; margin-bottom:32px;
+  }
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:36px;}
+  .hero-badges{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  }
+  .badge{
+    font-family:'JetBrains Mono', monospace; font-size:0.7rem; letter-spacing:0.05em;
+    color:var(--text-faint); border:1px solid var(--border); padding:5px 10px;
+    border-radius:4px;
+  }
+
+  /* ---------- LEDGER (signature element) ---------- */
+  .ledger{
+    border:1px solid var(--border); border-radius:10px;
+    background:linear-gradient(180deg, var(--surface), var(--bg-elevated));
+    padding:18px 0; overflow:hidden; position:relative;
+  }
+  .ledger-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 20px 16px; border-bottom:1px solid var(--border);
+    margin-bottom:16px;
+  }
+  .ledger-head .title{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; letter-spacing:0.12em;
+    color:var(--text-dim); text-transform:uppercase;
+  }
+  .ledger-head .pulse{
+    display:flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--accent);
+  }
+  .pulse .led{
+    width:8px; height:8px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 10px var(--accent); animation:blink 1.6s infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+
+  .ledger-window{
+    position:relative; overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ledger-track{
+    display:flex; gap:14px; width:max-content; padding:0 20px;
+    animation:scrollLeft 36s linear infinite;
+  }
+  .ledger-window:hover .ledger-track{ animation-play-state:paused; }
+  @keyframes scrollLeft{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .capsule{
+    flex:none; width:188px; border:1px solid var(--border-bright);
+    background:var(--surface-2); border-radius:8px; padding:12px 14px;
+    position:relative;
+  }
+  .capsule::after{
+    content:"→"; position:absolute; right:-15px; top:50%; transform:translateY(-50%);
+    color:var(--text-faint); font-size:0.8rem;
+  }
+  .capsule .action{
+    font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--text);
+    margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .capsule .hash{
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--accent);
+    margin-bottom:8px; opacity:0.85;
+  }
+  .capsule .meta{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono', monospace; font-size:0.64rem; color:var(--text-faint);
+  }
+  .capsule .meta .ok{color:var(--accent);}
+
+  .ledger-foot{
+    padding:16px 20px 0; font-family:'JetBrains Mono', monospace; font-size:0.7rem;
+    color:var(--text-faint); border-top:1px solid var(--border); margin-top:16px; padding-top:14px;
+  }
+  .ledger-foot span{color:var(--accent);}
+
+  /* ---------- PROOF BAR ---------- */
+  .proofbar{
+    border-bottom:1px solid var(--border); background:var(--bg-elevated);
+  }
+  .proofbar .wrap{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:0;
+    padding:24px 28px;
+  }
+  .proof-item{
+    text-align:center; border-left:1px solid var(--border); padding:0 10px;
+  }
+  .proof-item:first-child{border-left:none;}
+  .proof-item .num{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.5rem; color:var(--accent);
+  }
+  .proof-item .lbl{
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--text-faint);
+    margin-top:4px; letter-spacing:0.04em;
+  }
+  @media (max-width:920px){
+    .proofbar .wrap{grid-template-columns:repeat(2,1fr); gap:18px;}
+    .proof-item{border-left:none; border-top:1px solid var(--border); padding-top:14px;}
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:88px 0; border-bottom:1px solid var(--border);}
+  .section-head{max-width:680px; margin-bottom:52px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{font-size:2.1rem; margin-bottom:14px;}
+  .section-head p{color:var(--text-dim); font-size:1.02rem;}
+
+  /* ---------- POSITIONING (3 pillars) ---------- */
+  .pillars{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .pillar{
+    border:1px solid var(--border); border-radius:10px; padding:28px;
+    background:linear-gradient(180deg, var(--surface), transparent);
+    transition:border-color .2s ease;
+  }
+  .pillar:hover{border-color:var(--border-bright);}
+  .pillar .icon{
+    width:38px; height:38px; border:1px solid var(--accent-dim); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+    color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;
+  }
+  .pillar h3{font-size:1.15rem; margin-bottom:10px;}
+  .pillar p{color:var(--text-dim); font-size:0.92rem;}
+  @media (max-width:920px){.pillars{grid-template-columns:1fr;}}
+
+  /* ---------- PIPELINE ---------- */
+  .pipeline{
+    display:flex; flex-direction:column; border:1px solid var(--border); border-radius:10px; overflow:hidden;
+  }
+  .phase{
+    display:grid; grid-template-columns:90px 1fr 1.4fr; gap:24px; align-items:center;
+    padding:26px 28px; border-bottom:1px solid var(--border); background:var(--surface);
+  }
+  .phase:nth-child(even){background:var(--bg-elevated);}
+  .phase:last-child{border-bottom:none;}
+  .phase .num{
+    font-family:'JetBrains Mono', monospace; font-size:1.6rem; color:var(--accent);
+    font-weight:600;
+  }
+  .phase .name{font-size:1.15rem; font-weight:600; font-family:'Space Grotesk',sans-serif;}
+  .phase .name small{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:0.66rem;
+    color:var(--text-faint); letter-spacing:0.1em; margin-top:4px; text-transform:uppercase;
+  }
+  .phase p{color:var(--text-dim); font-size:0.9rem;}
+  @media (max-width:760px){
+    .phase{grid-template-columns:1fr; gap:8px;}
+  }
+
+  /* ---------- SECURITY STACK ---------- */
+  .security-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:start;}
+  .stack{display:flex; flex-direction:column; gap:8px;}
+  .layer{
+    border:1px solid var(--border); border-radius:8px; padding:14px 18px;
+    display:flex; justify-content:space-between; align-items:center; gap:14px;
+    background:var(--surface);
+  }
+  .layer .l-name{font-weight:600; font-size:0.92rem;}
+  .layer .l-name small{display:block; color:var(--text-faint); font-size:0.74rem; font-weight:400; margin-top:2px;}
+  .layer .l-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent);
+    border:1px solid var(--accent-dim); padding:3px 8px; border-radius:999px; flex:none;
+  }
+  .killbox{
+    border:1px solid var(--alert); background:var(--alert-soft); border-radius:10px;
+    padding:26px; margin-top:0;
+  }
+  .killbox h4{color:var(--alert); font-size:1.05rem; margin-bottom:10px;
+    display:flex; align-items:center; gap:10px;}
+  .killbox h4::before{
+    content:""; width:10px; height:10px; background:var(--alert); border-radius:50%;
+    box-shadow:0 0 10px var(--alert);
+  }
+  .killbox p{color:var(--text-dim); font-size:0.9rem; margin-bottom:14px;}
+  .killbox .mono-row{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--text);
+    background:var(--bg); border:1px solid var(--border); border-radius:6px;
+    padding:10px 14px; margin-bottom:8px;
+  }
+  .killbox .mono-row .v{color:var(--alert);}
+  .compliance-strip{
+    display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;
+  }
+  .compliance-strip span{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--text-dim);
+    border:1px solid var(--border); padding:6px 12px; border-radius:4px;
+  }
+  @media (max-width:920px){.security-grid{grid-template-columns:1fr;}}
+
+  /* ---------- CONNECTORS ---------- */
+  .conn-grid{
+    display:grid; grid-template-columns:repeat(7,1fr); gap:10px;
+  }
+  .conn-item{
+    border:1px solid var(--border); border-radius:8px; padding:16px 10px;
+    text-align:center; font-size:0.78rem; color:var(--text-dim);
+    background:var(--surface); transition:all .15s ease;
+  }
+  .conn-item:hover{border-color:var(--accent); color:var(--text);}
+  @media (max-width:920px){.conn-grid{grid-template-columns:repeat(3,1fr);}}
+
+  /* ---------- DEPLOYMENT TIERS ---------- */
+  .tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .tier{
+    border:1px solid var(--border); border-radius:10px; padding:28px;
+    display:flex; flex-direction:column; background:var(--surface);
+  }
+  .tier.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent), 0 20px 60px -30px var(--accent-dim);}
+  .tier .tier-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.14em;
+    color:var(--accent); text-transform:uppercase; margin-bottom:10px;
+  }
+  .tier h3{font-size:1.3rem; margin-bottom:8px;}
+  .tier .price{font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:700; margin:14px 0;}
+  .tier .price small{font-size:0.8rem; color:var(--text-faint); font-weight:400; font-family:'Inter',sans-serif;}
+  .tier ul{list-style:none; margin:18px 0 24px; flex:1; display:flex; flex-direction:column; gap:10px;}
+  .tier ul li{
+    font-size:0.86rem; color:var(--text-dim); padding-left:20px; position:relative;
+  }
+  .tier ul li::before{
+    content:"✓"; position:absolute; left:0; color:var(--accent); font-family:'JetBrains Mono',monospace;
+  }
+  @media (max-width:920px){.tiers{grid-template-columns:1fr;}}
+
+  /* ---------- PARTNERS ---------- */
+  .partner-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .partner-card{
+    border:1px solid var(--border); border-radius:10px; padding:28px; background:var(--surface);
+  }
+  .partner-card h3{font-size:1.15rem; margin-bottom:10px;}
+  .partner-card p{color:var(--text-dim); font-size:0.9rem; margin-bottom:18px;}
+  @media (max-width:760px){.partner-grid{grid-template-columns:1fr;}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+  }
+  .res-card{
+    border:1px solid var(--border); border-radius:10px; padding:24px;
+    background:var(--surface); display:flex; flex-direction:column; gap:12px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .res-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .res-card .res-icon{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--accent);
+    letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .res-card h4{font-size:1.05rem;}
+  .res-card p{font-size:0.85rem; color:var(--text-dim); flex:1;}
+  .res-card .res-link{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--accent);
+    display:flex; align-items:center; gap:6px;
+  }
+  @media (max-width:920px){.res-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.res-grid{grid-template-columns:1fr;}}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    text-align:center; padding:96px 0; border-bottom:none;
+  }
+  .final-cta h2{font-size:2.4rem; max-width:620px; margin:0 auto 18px;}
+  .final-cta p{color:var(--text-dim); max-width:520px; margin:0 auto 32px;}
+  .final-cta .hero-ctas{justify-content:center;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:48px 0 36px; background:var(--bg-elevated);}
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:32px; margin-bottom:36px;
+  }
+  .footer-grid h5{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.14em;
+    color:var(--text-faint); text-transform:uppercase; margin-bottom:14px;
+  }
+  .footer-grid ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .footer-grid ul li a{font-size:0.86rem; color:var(--text-dim);}
+  .footer-grid ul li a:hover{color:var(--accent);}
+  .footer-grid p{color:var(--text-dim); font-size:0.86rem; max-width:320px;}
+  .footer-bottom{
+    border-top:1px solid var(--border); padding-top:24px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--text-faint);
+  }
+  @media (max-width:920px){
+    .footer-grid{grid-template-columns:1fr 1fr; gap:28px;}
+  }
+
+  /* ---------- responsive hero ---------- */
+  @media (max-width:1020px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:2.5rem;}
+  }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    .ledger-track{animation:none;}
+    .pulse .led{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <span class="mark"></span>
+      <span>INTELLECTA CORTEX
+        <small>SOVEREIGN AI CONTROL PLANE</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#security">Security</a>
+      <a href="#connectors">Integrations</a>
+      <a href="#deployment">Deployment</a>
+      <a href="#partners">Partners</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#resources">Resources</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#resources" class="btn btn-ghost btn-sm">Download</a>
+      <a href="#demo" class="btn btn-primary btn-sm">Request Demo</a>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top" style="border-bottom:1px solid var(--border);">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Self-hosted &middot; Air-gap capable &middot; Zero data exodus</div>
+      <h1>Run every system. Show <em>one interface</em>. Prove every action.</h1>
+      <p class="lead">
+        Cortex is a sovereign, self-hosted AI control plane that connects to the enterprise systems
+        you already run — Maximo, SAP, Salesforce, Snowflake, your databases — and replaces their
+        interfaces with a single natural-language workspace. Every agent action is cryptographically
+        signed and Merkle-chained. Nothing ever leaves your infrastructure.
+      </p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn btn-primary">Request a demo</a>
+        <a href="#resources" class="btn btn-ghost">Download the binary</a>
+        <a href="#pricing" class="btn btn-ghost">View pricing</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">WCAG 2.2 AA</span>
+        <span class="badge">EU AI ACT ART.12</span>
+        <span class="badge">NERC CIP-015-1</span>
+        <span class="badge">IETF SCITT</span>
+        <span class="badge">SOC 2-READY</span>
+        <span class="badge">ED25519 SIGNED</span>
+      </div>
+    </div>
+
+    <!-- Signature element: live provenance ledger -->
+    <div class="ledger" aria-hidden="false">
+      <div class="ledger-head">
+        <span class="title">Provenance Ledger — live capsule stream</span>
+        <span class="pulse"><span class="led"></span> verifying</span>
+      </div>
+      <div class="ledger-window">
+        <div class="ledger-track">
+          <div class="capsule">
+            <div class="action">postgres_list_tables</div>
+            <div class="hash">blake3:8f3a0c…e91c</div>
+            <div class="meta"><span>agent: gw-04</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">cdc_mirror.commit</div>
+            <div class="hash">blake3:2b71fa…0a4d</div>
+            <div class="meta"><span>agent: mirror-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">absorb.field_promote</div>
+            <div class="hash">blake3:c40d91…77b2</div>
+            <div class="meta"><span>agent: absorb-2</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">genesis.render_panel</div>
+            <div class="hash">blake3:5e1209…9f3a</div>
+            <div class="meta"><span>agent: genesis-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">scitt.anchor_receipt</div>
+            <div class="hash">blake3:a9c7d4…11e8</div>
+            <div class="meta"><span>agent: prov-0</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">retire.sign_cert</div>
+            <div class="hash">blake3:7140bd…c62f</div>
+            <div class="meta"><span>agent: retire-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <!-- duplicate set for seamless loop -->
+          <div class="capsule">
+            <div class="action">postgres_list_tables</div>
+            <div class="hash">blake3:8f3a0c…e91c</div>
+            <div class="meta"><span>agent: gw-04</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">cdc_mirror.commit</div>
+            <div class="hash">blake3:2b71fa…0a4d</div>
+            <div class="meta"><span>agent: mirror-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">absorb.field_promote</div>
+            <div class="hash">blake3:c40d91…77b2</div>
+            <div class="meta"><span>agent: absorb-2</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">genesis.render_panel</div>
+            <div class="hash">blake3:5e1209…9f3a</div>
+            <div class="meta"><span>agent: genesis-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">scitt.anchor_receipt</div>
+            <div class="hash">blake3:a9c7d4…11e8</div>
+            <div class="meta"><span>agent: prov-0</span><span class="ok">✓ ed25519</span></div>
+          </div>
+          <div class="capsule">
+            <div class="action">retire.sign_cert</div>
+            <div class="hash">blake3:7140bd…c62f</div>
+            <div class="meta"><span>agent: retire-1</span><span class="ok">✓ ed25519</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ledger-foot">
+        Every capsule is BLAKE3-hashed, parent-linked, and Ed25519-signed —
+        <span>0 Merkle failures across 1M capsules</span> in validation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROOF BAR ========== -->
+<div class="proofbar">
+  <div class="wrap">
+    <div class="proof-item"><div class="num">&le;10MB</div><div class="lbl">SINGLE BINARY</div></div>
+    <div class="proof-item"><div class="num">&le;50ms</div><div class="lbl">P95 ROUTING LATENCY</div></div>
+    <div class="proof-item"><div class="num">4GB / 2vCPU</div><div class="lbl">MIN. FOOTPRINT</div></div>
+    <div class="proof-item"><div class="num">100%</div><div class="lbl">WCAG 2.2 AA — 18 COMPONENTS</div></div>
+    <div class="proof-item"><div class="num">99.9%</div><div class="lbl">GATEWAY UPTIME TARGET</div></div>
+  </div>
+</div>
+
+<!-- ========== POSITIONING ========== -->
+<section id="positioning">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Why Cortex</div>
+      <h2>Three problems most enterprise AI projects never solve.</h2>
+      <p>
+        Most "AI for the enterprise" platforms either route your data to a vendor cloud, bolt a chatbot
+        onto existing screens, or hand you a governance dashboard with nothing underneath it. Cortex was
+        built around three constraints that don't compromise.
+      </p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="icon">01</div>
+        <h3>Sovereignty by construction</h3>
+        <p>
+          Cortex is a single Rust binary plus PostgreSQL with pgvector — nothing else. It runs on your
+          server, validates its license offline via Ed25519-signed JWT, and never makes an outbound
+          call. Defence, banking, and energy customers can run it fully air-gapped with updates
+          delivered on physical media.
+        </p>
+      </div>
+      <div class="pillar">
+        <div class="icon">02</div>
+        <h3>Provenance, not promises</h3>
+        <p>
+          Every agent action — every query, every write, every dashboard generated — produces a
+          BLAKE3-hashed, Ed25519-signed TraceCaps capsule, chained into a Merkle tree and anchored to
+          IETF SCITT. The result is an IETF AAT-compliant audit trail that satisfies EU AI Act Art. 12
+          and NERC CIP-015-1 out of the box.
+        </p>
+      </div>
+      <div class="pillar">
+        <div class="icon">03</div>
+        <h3>Migration nobody notices</h3>
+        <p>
+          Cortex doesn't ask anyone to switch tools. It observes how your teams already work inside
+          Maximo, SAP, or Salesforce, mirrors the underlying data in real time, and gradually generates
+          a faster, accessible interface behind a Strangler Fig façade — with instant rollback to the
+          legacy app if anything doesn't match.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PIPELINE ========== -->
+<section id="pipeline">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> The Obsolescence Pipeline</div>
+      <h2>Six phases. Zero downtime. Zero detection.</h2>
+      <p>
+        Cortex migrates a workload from legacy software to a Cortex-native, accessible dashboard through
+        a fixed sequence. Each phase is independently reversible, and each one produces its own
+        cryptographic record.
+      </p>
+    </div>
+    <div class="pipeline">
+      <div class="phase">
+        <div class="num">01</div>
+        <div class="name">Observe<small>Field-level capture</small></div>
+        <p>A lightweight browser extension and ObserverAgent record field-level interactions inside
+        your existing applications, building decision traces without changing a single workflow.</p>
+      </div>
+      <div class="phase">
+        <div class="num">02</div>
+        <div class="name">Mirror<small>Real-time CDC</small></div>
+        <p>Once a field is observed often enough, the Mirror Engine subscribes to the source database's
+        change stream — column-level, Kafka-free — and replicates it into TraceDB with sub-100ms p95
+        latency at 250M+ events/week.</p>
+      </div>
+      <div class="phase">
+        <div class="name">Absorb<small>Just-in-time promotion</small></div>
+        <div class="num">03</div>
+        <p>The Absorption Engine promotes mirrored fields into agent-safe, copy-on-write branches, gated
+        by a write-approval step — so Cortex can act on the data without ever risking the source of
+        truth.</p>
+      </div>
+      <div class="phase">
+        <div class="num">04</div>
+        <div class="name">Genesis<small>Self-building UI</small></div>
+        <p>The Genesis Engine converts absorbed fields and observed workflows directly into WCAG 2.2 AA
+        A2UI dashboards — behaviourally equivalent to the screens your teams already know, just faster
+        and accessible.</p>
+      </div>
+      <div class="phase">
+        <div class="num">05</div>
+        <div class="name">Replace<small>Strangler Fig façade</small></div>
+        <p>Live traffic is progressively routed to the new Cortex panels. An absorption-score dashboard
+        shows leadership exactly how much of each system has been replaced, with instant hybrid
+        rollback to the legacy app at the same workflow step if needed.</p>
+      </div>
+      <div class="phase">
+        <div class="num">06</div>
+        <div class="name">Retire<small>Cryptographic decommission</small></div>
+        <p>The Retirement Engine captures full context, replays it for functional equivalence, and signs
+        a cryptographic decommissioning certificate — your evidence that the legacy system can be
+        switched off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECURITY ========== -->
+<section id="security">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Security Fortress</div>
+      <h2>Seven layers of defence. One switch to stop everything.</h2>
+      <p>
+        Cortex assumes zero implicit trust between any two components. Every MCP request — from a user,
+        an agent, or another system — passes through the full stack before it can touch a connector.
+      </p>
+    </div>
+    <div class="security-grid">
+      <div class="stack">
+        <div class="layer">
+          <div class="l-name">Semantic Firewall<small>Blocks OWASP MCP Top 10 prompt-injection patterns before routing</small></div>
+          <span class="l-tag">L1</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">Tool-Level RBAC<small>Per-tool, per-role authorisation on every connector</small></div>
+          <span class="l-tag">L2</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">Crypto HITL<small>Ed25519 manifest signing for high-risk operations</small></div>
+          <span class="l-tag">L3</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">CABP Identity Pipeline<small>6-stage token, scope, entitlement and rate-limit checks</small></div>
+          <span class="l-tag">L4</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">MCPShield<small>Probe → constrained execution → post-invocation reflection</small></div>
+          <span class="l-tag">L5</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">MCIP Contextual Integrity<small>Validates sender identity, context and consent</small></div>
+          <span class="l-tag">L6</span>
+        </div>
+        <div class="layer">
+          <div class="l-name">Greybox Semantic Fuzzer<small>Continuously probes for unauthorised state transitions</small></div>
+          <span class="l-tag">L7</span>
+        </div>
+
+        <div class="compliance-strip">
+          <span>EU AI Act Art. 12</span>
+          <span>NERC CIP-015-1</span>
+          <span>SOC 2</span>
+          <span>IETF SCITT</span>
+          <span>IETF AAT</span>
+          <span>WCAG 2.2 AA / VPAT 2.4</span>
+        </div>
+      </div>
+
+      <div class="killbox">
+        <h4>CortexGuard — offline kill switch</h4>
+        <p>
+          A single administrator action halts every agent in the system, instantly and verifiably —
+          even with no network connectivity. Recovery is just as immediate.
+        </p>
+        <div class="mono-row">POST /admin/kill &nbsp;→&nbsp; <span class="v">503</span> on every subsequent /mcp request</div>
+        <div class="mono-row">POST /admin/revive &nbsp;→&nbsp; <span class="v">200</span> resumes, fully audited</div>
+        <p style="margin-top:14px; margin-bottom:0;">
+          Built on a hardware-token, behavioural-baseline and network-heartbeat model — works
+          identically whether you're online or fully air-gapped.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONNECTORS ========== -->
+<section id="connectors">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Integrations</div>
+      <h2>Connects to what you've already got.</h2>
+      <p>
+        Cortex ships with MCP connectors for the systems most enterprises already run, with new
+        connectors added continuously. No vendor-specific runtime dependencies are required for backup
+        parsing.
+      </p>
+    </div>
+    <div class="conn-grid">
+      <div class="conn-item">IBM Maximo</div>
+      <div class="conn-item">Oracle E-Business Suite</div>
+      <div class="conn-item">Oracle Fusion Cloud</div>
+      <div class="conn-item">SAP S/4HANA</div>
+      <div class="conn-item">Salesforce</div>
+      <div class="conn-item">Workday</div>
+      <div class="conn-item">Snowflake</div>
+      <div class="conn-item">Jira</div>
+      <div class="conn-item">GitHub Enterprise</div>
+      <div class="conn-item">Slack</div>
+      <div class="conn-item">ServiceNow</div>
+      <div class="conn-item">PostgreSQL</div>
+      <div class="conn-item">SQL Server</div>
+      <div class="conn-item">IBM DB2</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DEPLOYMENT ========== -->
+<section id="deployment">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Deployment</div>
+      <h2>Three tiers of sovereignty. You choose where the line sits.</h2>
+      <p>
+        Every tier runs the same binary and the same provenance engine. The only difference is where
+        the infrastructure — and the keys — live.
+      </p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-tag">Tier A — Managed Sandbox</div>
+        <h3>Evaluation Demo</h3>
+        <div class="price">Hosted<small> / for evaluation only</small></div>
+        <ul>
+          <li>Cortex hosted on a managed instance</li>
+          <li>Sample Knowledge Snap + demo data</li>
+          <li>Full Insight Engine + dashboard preview</li>
+          <li>No production data permitted</li>
+          <li>Up to 2 connectors configured for you</li>
+        </ul>
+        <a href="#demo" class="btn btn-ghost btn-block">Launch the demo</a>
+      </div>
+      <div class="tier featured">
+        <div class="tier-tag">Tier B — Customer-Operated</div>
+        <h3>Sovereign Enterprise</h3>
+        <div class="price">Custom<small> / per node, annual licence</small></div>
+        <ul>
+          <li>Full Cortex binary on your infrastructure</li>
+          <li>Your PostgreSQL + pgvector instance</li>
+          <li>Full connector library, including write-back</li>
+          <li>Six-phase Absorption Pipeline enabled</li>
+          <li>CortexGuard kill switch + full Security Fortress</li>
+          <li>Dell AI Factory validated reference architecture</li>
+        </ul>
+        <a href="#pricing" class="btn btn-primary btn-block">Get pricing</a>
+      </div>
+      <div class="tier">
+        <div class="tier-tag">Tier C — Air-Gapped</div>
+        <h3>Regulated &amp; Defence</h3>
+        <div class="price">Custom<small> / site licence + media bundle</small></div>
+        <ul>
+          <li>No connectivity to Cortex infrastructure, ever</li>
+          <li>Offline Ed25519 license validation</li>
+          <li>Updates via signed physical-media bundles</li>
+          <li>DORA, PQFIF, NCSC &amp; NIST PQ compliance agents</li>
+          <li>Dedicated implementation &amp; runbook support</li>
+        </ul>
+        <a href="#partners" class="btn btn-ghost btn-block">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PARTNERS ========== -->
+<section id="partners">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Partners &amp; Validation</div>
+      <h2>Built to validate against the infrastructure you already trust.</h2>
+      <p>
+        Cortex's self-validation suite runs twelve independent experiments — security, semantic
+        routing, provenance integrity, mobile inference and more — and produces a signed,
+        reproducible AnalysisReport.
+      </p>
+    </div>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <h3>Dell AI Factory reference architecture</h3>
+        <p>
+          Cortex's deployment model is validated against Dell PowerEdge XE servers with NVIDIA NemoClaw,
+          producing a due-diligence report and deployment blueprint for direct submission through the
+          Dell AI Ecosystem Program.
+        </p>
+        <a href="#resources" class="btn btn-ghost btn-sm">View validation report</a>
+      </div>
+      <div class="partner-card">
+        <h3>Become an implementation partner</h3>
+        <p>
+          Systems integrators, MSPs and compliance consultancies can deliver Cortex deployments using
+          the Implementation Manual and a structured Phase 0–6 launch plan. Partner enablement includes
+          access to the Knowledge Snap library and connector SDK.
+        </p>
+        <a href="#demo" class="btn btn-ghost btn-sm">Apply to partner</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Pricing</div>
+      <h2>Licensed by node, not by seat.</h2>
+      <p>
+        Because Cortex replaces software rather than adding to it, pricing is structured around
+        infrastructure footprint and connector count — not per-user fees that punish adoption.
+        Every plan includes the full Security Fortress and provenance engine.
+      </p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-tag">Pilot</div>
+        <h3>Single Department</h3>
+        <div class="price">Contact us<small> / 90-day pilot</small></div>
+        <ul>
+          <li>One production node</li>
+          <li>Up to 4 connectors</li>
+          <li>Absorption Pipeline for one workload</li>
+          <li>Email support, 1 business day SLA</li>
+        </ul>
+        <a href="#demo" class="btn btn-ghost btn-block">Start a pilot</a>
+      </div>
+      <div class="tier featured">
+        <div class="tier-tag">Sovereign Enterprise</div>
+        <h3>Full Deployment</h3>
+        <div class="price">Contact us<small> / annual, per node</small></div>
+        <ul>
+          <li>Unlimited connectors &amp; TraceDB volume</li>
+          <li>Full Absorption Pipeline, all six phases</li>
+          <li>Knowledge Snap industry templates</li>
+          <li>Priority support, 4-hour SLA</li>
+          <li>Quarterly validation report</li>
+        </ul>
+        <a href="#demo" class="btn btn-primary btn-block">Request pricing</a>
+      </div>
+      <div class="tier">
+        <div class="tier-tag">Air-Gapped / Regulated</div>
+        <h3>Mission-Critical</h3>
+        <div class="price">Contact us<small> / site licence</small></div>
+        <ul>
+          <li>Physical-media update bundles</li>
+          <li>DORA / PQFIF / NCSC / NIST PQ agents</li>
+          <li>Dedicated implementation engineer</li>
+          <li>On-site or classified-environment support</li>
+        </ul>
+        <a href="#demo" class="btn btn-ghost btn-block">Request pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RESOURCES ========== -->
+<section id="resources">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Resources</div>
+      <h2>Everything you need to evaluate, deploy and run Cortex.</h2>
+      <p>
+        Documentation is versioned alongside every release and ships inside the air-gap bundle, so your
+        teams never need external access to read it.
+      </p>
+    </div>
+    <div class="res-grid">
+      <div class="res-card">
+        <span class="res-icon">Download</span>
+        <h4>Cortex Binary &amp; Air-Gap Bundle</h4>
+        <p>Single static Rust binary (&le;10MB), Docker image, or a complete offline .tar.gz bundle with
+        binary, config, Knowledge Snap and migrations.</p>
+        <a href="/download" class="res-link">Download latest release →</a>
+      </div>
+      <div class="res-card">
+        <span class="res-icon">Manual</span>
+        <h4>User Manual</h4>
+        <p>How to use the Interface of One — natural-language queries, dashboards, the command bar, and
+        the Provenance Explorer for compliance teams.</p>
+        <a href="/docs/user-manual" class="res-link">Read the user manual →</a>
+      </div>
+      <div class="res-card">
+        <span class="res-icon">Manual</span>
+        <h4>Implementation Manual</h4>
+        <p>The full Phase 0–6 launch runbook: install, connector configuration, the Absorption Pipeline,
+        validation suite, and air-gap deployment procedures.</p>
+        <a href="/docs/implementation-manual" class="res-link">Read the implementation manual →</a>
+      </div>
+      <div class="res-card">
+        <span class="res-icon">Demo</span>
+        <h4>Live Demo</h4>
+        <p>Explore a hosted Cortex instance pre-loaded with a Knowledge Snap for your industry — energy
+        &amp; utilities, banking, or general enterprise.</p>
+        <a href="/demo" class="res-link" id="demo">Launch the demo →</a>
+      </div>
+      <div class="res-card">
+        <span class="res-icon">Partners</span>
+        <h4>Partner Programme</h4>
+        <p>Apply for implementation-partner enablement, including the connector SDK, Knowledge Snap
+        library, and joint validation reports.</p>
+        <a href="/partners" class="res-link">Apply to the partner programme →</a>
+      </div>
+      <div class="res-card">
+        <span class="res-icon">Pricing</span>
+        <h4>Pricing &amp; Licensing</h4>
+        <p>Per-node licensing across Pilot, Sovereign Enterprise and Air-Gapped tiers, with a guided
+        consultation to size your deployment.</p>
+        <a href="#pricing" class="res-link">View pricing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL CTA ========== -->
+<section class="final-cta" style="border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;"><span class="dot"></span> Early access</div>
+    <h2>Replace your stack. Don't disrupt anyone.</h2>
+    <p>
+      Talk to the team building Cortex about a 90-day pilot on one workload — fully reversible, fully
+      audited, and run entirely inside your own infrastructure.
+    </p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">Request a demo</a>
+      <a href="#resources" class="btn btn-ghost">Download the architecture brief</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px;">
+          <span class="mark"></span>
+          <span>INTELLECTA CORTEX</span>
+        </div>
+        <p>
+          A product of Intellica AI LLC. A sovereign, self-hosted, cryptographically-verifiable
+          enterprise AI control plane — built to be replaced by nothing, and to quietly replace
+          everything else.
+        </p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#pipeline">Absorption Pipeline</a></li>
+          <li><a href="#security">Security Fortress</a></li>
+          <li><a href="#connectors">Integrations</a></li>
+          <li><a href="#deployment">Deployment Tiers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="/download">Download</a></li>
+          <li><a href="/docs/user-manual">User Manual</a></li>
+          <li><a href="/docs/implementation-manual">Implementation Manual</a></li>
+          <li><a href="/demo">Live Demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/partners">Partners</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="/about">About Intellica AI</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Compliance</h5>
+        <ul>
+          <li><a href="/compliance/eu-ai-act">EU AI Act Art. 12</a></li>
+          <li><a href="/compliance/scitt">IETF SCITT</a></li>
+          <li><a href="/compliance/wcag">WCAG 2.2 AA / VPAT</a></li>
+          <li><a href="/compliance/nerc-cip">NERC CIP-015-1</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Intellica AI LLC — Intellecta Cortex</span>
+      <span>Zero data exodus. Audited by design.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

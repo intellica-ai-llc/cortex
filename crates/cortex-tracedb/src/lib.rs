@@ -14,7 +14,6 @@ pub mod absorption_branches;
 pub mod retirement_certificates;
 pub mod reactive_mesh;
 
-use std::sync::Arc;
 use sqlx::PgPool;
 
 pub struct CortexTraceDB {

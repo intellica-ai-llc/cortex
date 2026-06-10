@@ -25,8 +25,8 @@ pub struct SourceSystem {
 
     pub projected_retirement_date: Option<NaiveDate>,
     pub actual_retirement_date: Option<NaiveDate>,
-    pub license_cost_annual: Option<rust_decimal::Decimal>,
-    pub license_savings_ytd: Option<rust_decimal::Decimal>,
+    pub license_cost_annual: Option<f64>,
+    pub license_savings_ytd: Option<f64>,
 
     pub created_at: DateTime<Utc>,
 }

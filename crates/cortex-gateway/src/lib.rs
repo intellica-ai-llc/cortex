@@ -3,6 +3,7 @@ pub mod tool_registry;
 pub mod intent_parser;
 pub mod execution_planner;
 pub mod mcp_server;
+pub mod executor;
 
 use std::sync::Arc;
 use tokio::sync::RwLock;
@@ -10,6 +11,7 @@ use tokio::sync::RwLock;
 pub struct SemanticGateway {
     pub router: embedding_router::EmbeddingRouter,
     pub registry: Arc<RwLock<tool_registry::ToolRegistry>>,
+    pub connector_registry: Arc<cortex_integration::connector::ConnectorRegistry>,
     pub parser: intent_parser::IntentParser,
     pub planner: execution_planner::ExecutionPlanner,
 }
@@ -19,19 +21,20 @@ impl SemanticGateway {
         Self {
             router: embedding_router::EmbeddingRouter::new(),
             registry: Arc::new(RwLock::new(tool_registry::ToolRegistry::new())),
+            connector_registry: Arc::new(cortex_integration::connector::ConnectorRegistry::new()),
             parser: intent_parser::IntentParser::new(),
             planner: execution_planner::ExecutionPlanner::new(),
         }
     }
-
     pub async fn route_intent(&self, intent: &str) -> Result<execution_planner::ExecutionPlan, GatewayError> {
         let parsed = self.parser.parse(intent)?;
         let embedding = self.router.embed(intent);
         let candidates = self.registry.read().await.search(&embedding, 5, 0.3);
-        if candidates.is_empty() {
-            return Err(GatewayError::NoToolsFound(intent.to_string()));
-        }
+        if candidates.is_empty() { return Err(GatewayError::NoToolsFound(intent.to_string())); }
         Ok(self.planner.construct(&parsed, &candidates)?)
+    }
+    pub async fn execute_plan(&self, plan: execution_planner::ExecutionPlan) -> executor::ExecutionResult {
+        executor::ToolExecutor::execute(plan, &self.connector_registry).await
     }
 }
 

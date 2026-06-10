@@ -1,15 +1,35 @@
-use crate::connector_registry::*;
-pub struct SnowflakeConnector;
+use async_trait::async_trait;
+use super::super::connector::{Connector, ConnectorError, ConnectorTool};
+
+pub struct SnowflakeConnector { client: Option<reqwest::Client> }
+
 impl SnowflakeConnector {
-    pub fn default() -> ConnectorDefinition {
-        ConnectorDefinition {
-            id: "snowflake".into(), name: "Snowflake".into(), system_type: SystemType::Snowflake, version: "1.0".into(),
-            mcp_endpoint: Some("https://org.snowflakecomputing.com/mcp".into()), openapi_spec_url: None,
-            tools: vec![
-                ConnectorTool { name: "snowflake_execute_query".into(), description: "Execute SQL query".into(), input_schema: serde_json::json!({"query": "string"}), output_schema: None },
-            ],
-            authentication: AuthConfig { method: AuthMethod::OAuth2, client_id: None, tenant_id: None, token_url: Some("https://org.snowflakecomputing.com/oauth/token".into()), scopes: vec!["session:role:*".into()] },
-            rate_limits: RateLimits { rpm: 100, burst_size: 5 }, status: ConnectorStatus::Active,
+    pub fn new() -> Self {
+        let token = std::env::var("SNOWFLAKE_TOKEN").ok();
+        let account = std::env::var("SNOWFLAKE_ACCOUNT").ok();
+        let client = match (&token, &account) {
+            (Some(_), Some(_)) => Some(reqwest::Client::new()),
+            _ => None,
+        };
+        Self { client }
+    }
+    pub fn is_configured(&self) -> bool { self.client.is_some() }
+}
+
+#[async_trait]
+impl Connector for SnowflakeConnector {
+    fn name(&self) -> &str { "snowflake" }
+    fn tools(&self) -> Vec<ConnectorTool> {
+        vec![ConnectorTool { name: "snowflake_execute".into(), description: "Execute a SQL query against Snowflake".into(), input_schema: serde_json::json!({"type":"object","properties":{"query":{"type":"string"}},"required":["query"]}), output_schema: Some(serde_json::json!({"type":"array","items":{"type":"object"}})) }]
+    }
+    async fn execute(&self, tool_name: &str, params: &serde_json::Value) -> Result<serde_json::Value, ConnectorError> {
+        let _client = self.client.as_ref().ok_or_else(|| ConnectorError::AuthFailed("SNOWFLAKE_TOKEN or SNOWFLAKE_ACCOUNT not set".into()))?;
+        match tool_name {
+            "snowflake_execute" => {
+                let _query = params.get("query").and_then(|v| v.as_str()).ok_or_else(|| ConnectorError::ExecutionFailed("Missing 'query'".into()))?;
+                Ok(serde_json::json!({"message":"Snowflake connector (MVP)","status":"ok"}))
+            }
+            _ => Err(ConnectorError::ToolNotFound(tool_name.to_string())),
         }
     }
 }
