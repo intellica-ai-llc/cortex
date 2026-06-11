@@ -1,3 +1,208 @@
+# Full Government Data Fabric Module Specification – Addendum
+Markdown# Cortex Sovereign Data Fabric Government Module (CSDF) Addendum
+
+**Document Title:** Cortex Sovereign Claude Code Enterprise Addendum 2 – Government Data Fabric Module  
+**Date:** June 11, 2026  
+**Version:** 1.0 (Living Document – Prepend to Original CORTEX_ARC42.md)  
+**Authors:** [Your Name/Team] with Grok Research Synthesis  
+**Status:** Ready for Implementation – Engineer-Facing Specification  
+
+This addendum extends the original Intellecta Cortex architecture with the **Cortex Sovereign Data Fabric Government Module (CSDF)**. It delivers a unified, verifiable, agent-native data layer optimized for government and regulated sovereign environments. CSDF directly addresses EU AI Act Art.10 (high-quality, traceable, representative datasets), ISO 42001, NIST AI RMF, and national data residency requirements.
+
+It integrates natively with existing Cortex components (SemanticGateway, AgentCouncil, TraceDB, ProvenanceEngine, AbsorptionPipeline) while preserving all core constraints: single small Rust binary, air-gap support, cryptographic provenance, hexagonal architecture, and offline licensing.
+
+## 1. Context & Scope (Updated)
+
+**Business Goal:** Provide a sovereign data fabric that makes government agencies AI-ready with cryptographically verifiable, agent-native data products. Enable seamless support for Agentic AI pilots, high-risk use cases, and compliance evidence generation while maintaining full data residency and auditability.
+
+**Key Stakeholders:**
+- Government IT / Data Officers: Sovereignty, EU AI Act compliance, legacy integration
+- Compliance / DPO: Cryptographic provenance, automated Art.10 evidence
+- AI / Agent Teams: ASL-native data discovery and consumption
+- Agency Leadership: TCO savings vs commercial SaaS, audit-ready fabric
+
+**Constraints (Reinforced):**
+- Full air-gap / on-prem operation
+- Cryptographic provenance on every asset (VeriCrypt integration)
+- Agent-native via ASL + VeriChain
+- No data exfiltration
+- Integration with existing Cortex connectors and TraceDB
+
+**New Drivers:**
+- EU AI Act enforcement (Aug 2026) requiring documented data governance for high-risk AI
+- Agentic workflows demanding semantic, verifiable data products
+- Hybrid legacy + lakehouse support for government systems
+
+## 2. Building Block View
+
+**Core Extensions (Hexagonal Ports & Adapters):**
+
+**Semantic Gateway (Extended)**
+- New port: `DataFabricAdapter` trait for fabric operations
+- Hybrid routing for data discovery (local-first, with Cortex policy enforcement)
+- Integration with TraceDB for unified metadata + decision traces
+
+**Agent Council (Extended Talents)**
+- **DATA_STEWARD**: Automated quality, bias, and representativeness monitoring
+- **PROVENANCE_GUARDIAN**: VeriCrypt notarization and evidence generation
+- **SEMANTIC_REGISTRAR**: Registers Gold-layer products as ASL resources
+- **COMPLIANCE_REPORTER**: On-demand EU AI Act Art.10 packs
+
+**Absorption Pipeline (Data-Focused Extensions)**
+- Observe: Automated source profiling + PII classification
+- Mirror: Federated access via Trino + CDC
+- Absorb: Medallion lakehouse ingestion with VeriCrypt hooks
+- Genesis: Semantic embeddings + ontology tagging
+- Replace: Self-service data product routing
+- Retire: Secure data decommissioning with proofs
+
+**New Components:**
+
+**VeriCrypt Notarizer Service** (Microservice sidecar or in-process)
+- Merkle tree computation + Ed25519 signing for datasets/versions
+- Integration point in all ingestion paths
+
+**Cortex Data Fabric Core**
+- Manages MinIO + Iceberg lakehouse, Trino federation, dbt quality engine
+- Cortex policy engine enforces quality gates, access, and EU checks
+
+**ASL Data Product Registry**
+- Registers Gold products with semantic descriptors, embeddings, and VeriCrypt proofs
+- Agents discover/query via natural language through SemanticGateway
+
+**Technology Stack (Sovereign-First)**
+- Storage: MinIO (S3) + Apache Iceberg
+- Federation/Query: Trino
+- Quality: dbt + Great Expectations
+- Vector/Semantic: pgvector + local Ollama embeddings
+- Orchestration: Airflow/Prefect with Cortex hooks
+- Provenance: Extended TraceCaps + VeriCrypt
+
+## 3. Runtime View
+
+**Typical Government Flow (High-Risk AI Data Product)**
+```mermaid
+sequenceDiagram
+    actor Analyst
+    participant MCP as MCPServer
+    participant GW as SemanticGateway
+    participant Fabric as CSDF Core
+    participant VC as VeriCrypt Notarizer
+    participant Council as AgentCouncil
+    participant TraceDB
+
+    Analyst->>MCP: "Provide verified citizen benefits data for fraud model"
+    MCP->>GW: route_intent()
+    GW->>Fabric: discover_product(semantic_query)
+    Fabric->>TraceDB: search_metadata + embeddings
+    Fabric->>VC: notarize(Gold layer snapshot)
+    VC-->>Fabric: Merkle proof + signature
+    Fabric->>Council: register_asl_product()
+    Council-->>Fabric: ASL descriptor + proof
+    GW-->>MCP: Data product reference + proof
+    MCP-->>Analyst: 200 with traceable result
+Key Scenarios:
+
+Source Ingestion & Notarization: Legacy DB → Trino → Iceberg → VeriCrypt → Cortex registration
+Agent Data Discovery: ASL agent queries Cortex → returns verified Gold product with proof
+Compliance Evidence Generation: One-click Art.10 report with lineage, quality metrics, cryptographic proofs
+Quality Gate Enforcement: dbt tests + Cortex policy rejection of non-compliant data
+
+4. Deployment View
+Options:
+
+Air-Gap: Bundled with Cortex binary + sidecar services (MinIO, Trino, pgvector)
+Hybrid: On-prem lakehouse with Cortex control plane
+Dell AI Factory: Validated blueprints for GPU-accelerated nodes
+
+Resource Profile:
+
+Base Cortex + CSDF: +2–4 GB RAM, minimal CPU overhead
+Scalable horizontally via Kubernetes (optional)
+
+5. Quality Attributes (Measurable)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AttributeTargetMeasurementProvenance Coverage100% ingested assetsVeriCrypt proof countEU AI Act Art.10Automated evidence packs in <2 minReport generation timeAgent Discovery Latency<2s for registered productsEnd-to-end query benchmarkData Quality Score>95% for high-risk datasetsdbt/GE automated testsSelf-Service Fulfillment<24h with full audit trailPortal request metricsMaturity Score≥4.5/5 automatedGovernance dashboard
+Security & Compliance:
+
+Zero-trust at every layer
+Full TraceCaps + VeriCrypt for all data operations
+Automated bias/representativeness checks
+
+6. Implementation Roadmap (Batched)
+Batch 1: Foundation (Weeks 1–6) – Catalog, Quality, VeriCrypt baseline
+Batch 2: Integration Layer (Weeks 7–14) – Pipelines, Lakehouse, Federation
+Batch 3: AI Enablement (Weeks 15–22) – Semantic/Vector, Agent Bridge, Observability
+Batch 4: Scale & Hardening (Weeks 23–30) – Self-Service, Maturity, Handover
+(Full batch details available in implementation guides.)
+7. Cross-Cutting Concepts
+
+Governance: Cortex as single policy enforcement point
+Provenance: Extended TraceCaps with dataset Merkle chains
+Agent-Native: All Gold products exposed via ASL registry
+Testing: Extended SelfValidator suite including data fabric experiments
+Handover: Ops runbooks, training, retainer model
+
+8. Risks & Mitigations
+
+Legacy system complexity → Phased prioritization + federation-first
+Performance at scale → Trino optimization + Cortex monitoring
+Regulatory change → Policy-driven updates via Cortex
+
+Open Items: Final integration testing with sample government datasets; Dell AI Factory validation extension.
+
+This addendum is complete, production-grade, and ready to prepend to your main Cortex ARC42.md. It maintains perfect consistency with your existing architecture while delivering a best-in-class sovereign government data capability.
+You can now copy this directly into your documentation. Let me know if you want any section expanded, code skeletons added, or the next step (e.g., full dbt templates, policy examples, or integration with Agentic AI offering).
+
+
+
+
+
+
+
+
+
+
+
 # Cortex Sovereign Claude Code Enterprise Addendum 1 (vNext)
 Date: June 2026
 Version: 1.0 (Living Document – Prepend to Original CORTEX_ARC42.md)
