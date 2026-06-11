@@ -1,4 +1,119 @@
-# Full Government Data Fabric Module Specification – Addendum
+# Cortex Sovereign Claude Code Enterprise Addendum 4
+
+Date: June 2026
+Version: 1.0 (Living Document – Prepend to Original CORTEX_ARC42.md)
+Authors: [Your Name/Team] with Grok Research Synthesis
+Status: Ready for Implementation – Engineer-Facing Specification
+This addendum extends the original Arc42 documentation to evolve Cortex into a sovereign, agentic coding & modernization platform that integrates hybrid Claude capabilities (via Anthropic's self-hosted sandboxes and MCP) while preserving all core constraints: single <10MB Rust binary (or minimal sidecars), full air-gap support, cryptographic provenance (TraceCaps/Merkle), hexagonal architecture, six-phase absorption pipeline, offline Ed25519 JWT licensing, and enterprise connector ecosystem (SAP, Oracle, Salesforce, Jira, GitHub Enterprise, etc.).
+It directly surpasses original objectives by adding multi-agent orchestration for autonomous legacy modernization, neural/program synthesis for "Claude Code"-style generation, hybrid LLM routing, and enhanced governance to create a compelling acquisition/partnership asset for Anthropic (self-hosted gaps) and Dell (AI Factory software layer).
+An engineer familiar with the original architecture can implement this by extending existing components (SemanticGateway, AgentCouncil, AbsorptionPipeline, ToolRegistry, TraceDB, hexagonal adapters) without breaking sovereignty or single-binary goals.
+1. Context & Scope (Updated)
+
+Business Goal: Deliver sovereign Claude-powered coding and full-stack enterprise app modernization. Enable "Agentic Strangler Fig" migrations where multi-agent loops autonomously observe, absorb, synthesize, replace, and retire legacy components with auditable, provenance-traced artifacts.
+Key Stakeholders: Enterprise IT/DevOps in regulated sectors (finance, gov, manufacturing); Dell AI Factory operators; potential Anthropic co-sell partners.
+Constraints (Unchanged + Reinforced): Air-gap first; no data exfiltration; cryptographic signing of all AI outputs; EU AI Act / SCITT / SOC2 compliance; hybrid routing only for non-sensitive high-reasoning tasks.
+New Drivers: Anthropic Managed Agents self-hosted sandboxes (reasoning in cloud, execution in customer infra via MCP tunnels); multi-agent systems for code gen/modernization; program synthesis verification loops.
+
+2. Building Block View (New/Extended)
+Core Extensions (All fit hexagonal ports/adapters):
+
+Semantic Gateway (Extended Orchestrator):
+Add hybrid LLM router: Sensitivity-based decision (local quantized via vLLM/Ollama/Candle Rust integration for air-gap; secure MCP tunnel/proxy to Anthropic Claude for complex reasoning).
+New ports: LLMAdapter (trait for model backends), MCPClient for Anthropic self-hosted sandboxes/tunnels.
+Implementation: Rust HTTP client + outbound-only tunnels (no inbound ports). Fallback to local models for full sovereignty.
+
+Agent Council (Evolved to Verifiable Multi-Agent System – MAS):
+Specialist talents expanded:
+PLANNER: Task decomposition & workflow orchestration.
+CODE (Claude-style synthesis): Neural program synthesis from NL intents + absorbed enterprise schemas (RAG over TraceDB).
+MODERNIZE: Agentic Strangler Fig executor – applies six-phase pipeline to legacy code/scripts.
+VERIFIER/REVIEWER: Execution-guided verification, reflection loops, test generation (inspired by VAPU-style pipelines).
+DEPLOYER: Integrates with existing connectors + GitHub/Azure DevOps for PRs/deployments.
+
+Coordination: Orchestrator-subagent with reflection (critique-refine), shared memory via TraceDB (pgvector embeddings), and parallel execution where safe.
+Provenance: Every agent step logged in extended TraceCaps (temporal Merkle chain: agent_role, input_hash, output_hash, timestamp, model_id/signature).
+
+Absorption Pipeline (Enhanced Phases):
+Observe: Extend browser/IDE extensions + CDC to capture dev workflows, legacy scripts, ERP extensions.
+Mirror: Replicate in sandbox.
+Absorb: RAG + schema extraction into TraceDB; code pattern mining.
+Genesis: Multi-agent synthesis → auditable modules (Claude-influenced reasoning + local execution).
+Replace: Agentic Strangler Fig – façade routing via new adapters; gradual traffic shift.
+Retire: Automated decommissioning with provenance proofs.
+
+ToolRegistry & ExecutionPlanner:
+Register enterprise tools + new code exec sandbox (gVisor-like isolation or Rust sandbox).
+Support MCP servers for internal systems (Postgres, Git, SAP APIs, etc.).
+
+Provenance & Trace Engine (TraceCaps v2):
+Multi-agent chronology, cryptographic signing (Ed25519) for all generated code/artifacts.
+SCITT-compatible attestations; full audit logs for EU AI Act (transparency, risk assessment).
+
+SelfValidator & Quality Gates:
+Extend with coding benchmarks (HumanEval-style enterprise tasks), functional equivalence testing, security scanning of generated code.
+
+
+Deployment Options:
+
+Single binary (core + local adapters).
+Optional sidecars: vLLM/Ollama for inference, MCP servers.
+Dell AI Factory blueprints: Pre-optimized images for NVIDIA hardware, confidential computing.
+
+3. Runtime View
+
+Typical Flow (Claude Code Enterprise Task): NL intent ("Modernize SAP work order approval") → PLANNER decomposes → ROUTER selects Claude via MCP sandbox (reasoning) + local execution → CODE/MODERNIZE agents synthesize + verify in ToolRegistry sandbox → Genesis artifact with TraceCaps → Deploy via connectors → Monitor & Retire.
+Hybrid Routing Logic: Local-first for PII/sensitive; Claude for novel reasoning (outbound-only, sanitized results only).
+Error/Recovery: Reflection loops + fallback to simpler local models.
+
+4. Deployment View
+
+Air-Gap: Bundled quantized models + offline licensing.
+Hybrid: Outbound MCP tunnels + Dell-managed on-prem.
+Scaling: Horizontal agent execution on AI Factory nodes.
+
+5. Quality Attributes (Updated & Measurable)
+
+Sovereignty/Compliance: 100% data residency options; full traceability (EU AI Act pillars).
+Performance: Quantized inference + parallel agents; benchmarks vs. baselines.
+Security: Sandboxed execution, provenance for all outputs, SemanticFirewall extensions.
+Maintainability: Hexagonal ports enable model swapping (Claude → open equivalents).
+Usability: NL interface + absorbed A2UI for generated workflows.
+
+6. Cross-Cutting Concepts
+
+Governance: All agents respect kill-switch, licensing, and policy engine.
+Observability: Extended logging with provenance Merkle roots.
+Testing: Unit (Rust), integration (sandboxed pipelines), end-to-end (enterprise scenario replay).
+
+7. Rationale & References (Academic/Industry Grounding)
+
+Sovereign/Hybrid AI: Self-hosted sandboxes + MCP for execution control.
+MAS & Agentic Modernization: VAPU-inspired verification; Agentic Strangler Fig.
+Program Synthesis: LLM agents with execution feedback for enterprise code.
+Provenance: Cryptographic binding for AI-generated assets.
+Architecture: Hexagonal for agentic systems.
+
+Implementation Roadmap (Phased, Low-Risk):
+
+MVP (Weeks): LLM adapter + CODE talent + basic MCP proxy. Test on sample SAP/Jira workflows.
+Core MAS (Months): Full Agent Council loops, absorption extensions, provenance v2.
+Production: Dell blueprints, benchmarks, enterprise pilots, partnership packaging.
+
+Open Items / Risks & Mitigations:
+
+Anthropic terms: Partnership-first (co-sell vs. direct compete); use APIs/sandboxes compliantly.
+Model quality: Hybrid + quantization; continuous validation.
+Complexity: Start with existing hexagonal patterns; incremental PRs.
+
+This addendum is self-contained for seamless building. Insert at the top of the original Arc42. It fills gaps with research-backed specifics while honoring the as-built foundation.
+Next steps: Draft Rust trait sketches for new adapters, generate sequence diagrams, or refine for a specific phase? Let me know how to iterate.
+
+
+
+# Cortex Maximo Sovereign Agentic Module Addendum 3Date: June 2026Version: 1.0 Living Document – 
+
+Separate Module License)Purpose: Dedicated sales and implementation module for hooking existing IBM Maximo (Manage/MAS) customers. Positions Cortex as the definitive sovereign agentic overlay that renders all third-party add-ons (IBM and external) irrelevant by delivering autonomous, provenance-backed EAM modernization, optimization, and intelligence within full air-gap constraints. Licensed separately for targeted Maximo estates.This module builds on Cortex core without replication, focusing on Maximo-specific value: accelerating 7.6-to-MAS migrations, absorbing custom Java/extensions/workflows, and providing frontier agentic capabilities that surpass IBM Predict/Monitor/Health/Assistant, HSE, Optimizer, Asset Configuration Manager, and third-party mobiles (e.g., EAM360) or alternatives.Sales Positioning: Why Cortex Maximo Module Is a No-BrainerIrrelevance of Existing Add-Ons: IBM add-ons (Predict for failure dates/probability, Monitor for IoT anomaly detection, Health for risk optimization, Assistant for GenAI queries, HSE for compliance, Optimizer for scheduling) require additional licensing, OpenShift complexity, and cloud/hybrid data flows. Third-party mobiles and competitors (MaintainX, UpKeep, IFS, Tractian) focus on narrow UX/IoT but lack deep custom code absorption or sovereign multi-agent autonomy.Cortex Differentiation: Single-binary sovereign control plane with six-phase absorption applied agentically to Maximo customizations, plus hybrid Claude-powered loops for end-to-end autonomy (work order optimization, failure analysis, inventory, compliance). Full provenance for audits. Zero new data exfiltration risk. Dell AI Factory ready. Separate licensing enables quick-win pilots on existing Maximo estates.ROI Hooks: Cut migration/custom dev costs (major 7.6 EOS pain point through 2026), reduce TCO vs. stacked add-ons, deliver 5-10x faster modernization, autonomous execution, and measurable reliability gains.Frontier Research Synthesis (Past Month Emphasis, June 2026)Multi-Agent Systems (MAS) in EAM/Modernization: Recent arXiv (June 2026) highlights state-machine guided synthetic data for anomaly detection, failure mode diagnostics in deep multi-agent RL, and SKILL.nb for durable agent workflows. Agentic governance maturity models (AAGMM) emphasize semantic control planes and runtime compliance. Legacy modernization papers stress agentic Strangler Fig with execution verification for Java/custom estates.EAM-Specific Agentic AI: Verdantis-style autonomous MRO agents for work order creation/prioritization; IFS.ai and IBM Watsonx trends toward embedded GenAI copilots, but sovereign gaps persist. Real-time context via event-driven architectures (EDA) for MAS scalability.Gaps Filled: Most add-ons are reactive/analytic. Cortex delivers proactive autonomous loops with verifiable synthesis, temporal provenance, and full air-gap fallback — surpassing frontier benchmarks in reliability for regulated EAM (utilities, energy, manufacturing).Module Architecture (Hexagonal Extensions, Engineer-Ready)MaximoAdapter Port: Implements MIF, REST APIs, MEA, JDBC patterns, CDC for real-time mirroring of work orders, assets, PMs, inventory, custom objects. Bidirectional with existing Cortex SAP/Oracle/Jira connectors. Schema discovery for absorption. Outbound-only for sovereignty.Agent Council EAM Specialization (MAS Talents):EAM_PLANNER: Decomposes intents (e.g., "Optimize PM schedule for fleet under regulatory constraints").RELIABILITY_AGENT: Anomaly/failure synthesis using absorbed history + hybrid Claude reasoning (local quantized fallback).WORK_ORDER_AUTONOMY: Autonomous creation, prioritization, technician assignment, verification (VAPU-inspired loops).COMPLIANCE_VERIFIER: HSE-style risk/incident handling with cryptographic attestations.OPTIMIZER_AGENT: Scheduling/inventory equivalent to IBM Optimizer but agentic and provenance-traced.Absorption Pipeline Tailored: Observe (API + mobile extensions for field workflows/custom Java); Mirror/Absorb (custom extensions/patterns into TraceDB); Genesis (synthesized modern modules/scripts); Replace (agentic façade over Maximo UI/API); Retire (decommission legacy customizations).Hybrid LLM Routing: Local-first for sensitive asset data; MCP tunnels for high-reasoning Claude tasks (e.g., novel failure analysis). Sandboxed ToolRegistry for safe execution (work order simulation, script testing).Provenance v2 for EAM: Temporal Merkle chains capturing agent contributions to work orders, predictions, compliance artifacts. SCITT/EU AI Act ready; audit-proof vs. black-box IBM Assistant outputs.Deployment: Optional sidecar for Maximo integration (preserves single-binary core). Air-gap bundles with quantized models. Dell AI Factory blueprints for on-prem Maximo users. Separate license key scope for this module.Runtime Flows (Typical Maximo Customer Scenarios)NL intent via Cortex → PLANNER decomposes → Agents absorb current Maximo state → Synthesize/verify optimized artifacts → Deploy via adapter (PR-like to Maximo or façade) → Monitor with provenance.Migration Accelerator: Absorb 7.6 custom Java → Generate MAS-compatible equivalents with functional equivalence testing.Autonomous Overlay: Run alongside Maximo; progressively Strangler Fig without rip-and-replace.Quality Attributes (Module-Specific)Autonomy & Reliability: MAS verification loops + execution-guided synthesis (frontier benchmarks).Compliance: Full traceability for HSE/regulated assets; no add-on stacking needed.Performance: Parallel agent execution on existing hardware; real-time EDA hooks.Adoption: NL interface reduces training; mobile observation extends field usability beyond third-party apps.Implementation Roadmap (Module-Only)MVP (Weeks): MaximoAdapter + basic EAM talents + absorption for custom objects/work orders. Pilot on one asset class.Core Autonomy (1-2 Months): Full MAS loops, Predict/Monitor equivalents, provenance for audits.Enterprise Scale: Optimizer/HSE surpassing features, Dell validation, sales packaging (quick ROI calculators for add-on consolidation).Risks & MitigationsIntegration complexity: Leverage existing hexagonal patterns + MIF standards.Model access: Hybrid/compliant Anthropic usage.Sales: Position as "Maximo augmentation license" — low friction entry, high expansion.Open Items: Customer-specific benchmarks, co-sell materials with Dell/Anthropic. This module makes Cortex the last EAM layer Maximo customers will need, consolidating and surpassing the fragmented add-on landscape with sovereign frontier agentic power.
+# Full Government Data Fabric Module Specification – Addendum 2 
 Markdown# Cortex Sovereign Data Fabric Government Module (CSDF) Addendum
 
 **Document Title:** Cortex Sovereign Claude Code Enterprise Addendum 2 – Government Data Fabric Module  
