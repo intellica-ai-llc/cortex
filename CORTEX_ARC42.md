@@ -1,4 +1,111 @@
-ARCHITECTURE BLUEPRINT – Intellecta Cortex
+# Cortex Sovereign Claude Code Enterprise Addendum 1 (vNext)
+Date: June 2026
+Version: 1.0 (Living Document – Prepend to Original CORTEX_ARC42.md)
+Authors: [Your Name/Team] with Grok Research Synthesis
+Status: Ready for Implementation – Engineer-Facing Specification
+This addendum extends the original Arc42 documentation to evolve Cortex into a sovereign, agentic coding & modernization platform that integrates hybrid Claude capabilities (via Anthropic's self-hosted sandboxes and MCP) while preserving all core constraints: single <10MB Rust binary (or minimal sidecars), full air-gap support, cryptographic provenance (TraceCaps/Merkle), hexagonal architecture, six-phase absorption pipeline, offline Ed25519 JWT licensing, and enterprise connector ecosystem (SAP, Oracle, Salesforce, Jira, GitHub Enterprise, etc.).
+It directly surpasses original objectives by adding multi-agent orchestration for autonomous legacy modernization, neural/program synthesis for "Claude Code"-style generation, hybrid LLM routing, and enhanced governance to create a compelling acquisition/partnership asset for Anthropic (self-hosted gaps) and Dell (AI Factory software layer).
+An engineer familiar with the original architecture can implement this by extending existing components (SemanticGateway, AgentCouncil, AbsorptionPipeline, ToolRegistry, TraceDB, hexagonal adapters) without breaking sovereignty or single-binary goals.
+1. Context & Scope (Updated)
+
+Business Goal: Deliver sovereign Claude-powered coding and full-stack enterprise app modernization. Enable "Agentic Strangler Fig" migrations where multi-agent loops autonomously observe, absorb, synthesize, replace, and retire legacy components with auditable, provenance-traced artifacts.
+Key Stakeholders: Enterprise IT/DevOps in regulated sectors (finance, gov, manufacturing); Dell AI Factory operators; potential Anthropic co-sell partners.
+Constraints (Unchanged + Reinforced): Air-gap first; no data exfiltration; cryptographic signing of all AI outputs; EU AI Act / SCITT / SOC2 compliance; hybrid routing only for non-sensitive high-reasoning tasks.
+New Drivers: Anthropic Managed Agents self-hosted sandboxes (reasoning in cloud, execution in customer infra via MCP tunnels); multi-agent systems for code gen/modernization; program synthesis verification loops.
+
+2. Building Block View (New/Extended)
+Core Extensions (All fit hexagonal ports/adapters):
+
+Semantic Gateway (Extended Orchestrator):
+Add hybrid LLM router: Sensitivity-based decision (local quantized via vLLM/Ollama/Candle Rust integration for air-gap; secure MCP tunnel/proxy to Anthropic Claude for complex reasoning).
+New ports: LLMAdapter (trait for model backends), MCPClient for Anthropic self-hosted sandboxes/tunnels.
+Implementation: Rust HTTP client + outbound-only tunnels (no inbound ports). Fallback to local models for full sovereignty.
+
+Agent Council (Evolved to Verifiable Multi-Agent System – MAS):
+Specialist talents expanded:
+PLANNER: Task decomposition & workflow orchestration.
+CODE (Claude-style synthesis): Neural program synthesis from NL intents + absorbed enterprise schemas (RAG over TraceDB).
+MODERNIZE: Agentic Strangler Fig executor – applies six-phase pipeline to legacy code/scripts.
+VERIFIER/REVIEWER: Execution-guided verification, reflection loops, test generation (inspired by VAPU-style pipelines).
+DEPLOYER: Integrates with existing connectors + GitHub/Azure DevOps for PRs/deployments.
+
+Coordination: Orchestrator-subagent with reflection (critique-refine), shared memory via TraceDB (pgvector embeddings), and parallel execution where safe.
+Provenance: Every agent step logged in extended TraceCaps (temporal Merkle chain: agent_role, input_hash, output_hash, timestamp, model_id/signature).
+
+Absorption Pipeline (Enhanced Phases):
+Observe: Extend browser/IDE extensions + CDC to capture dev workflows, legacy scripts, ERP extensions.
+Mirror: Replicate in sandbox.
+Absorb: RAG + schema extraction into TraceDB; code pattern mining.
+Genesis: Multi-agent synthesis → auditable modules (Claude-influenced reasoning + local execution).
+Replace: Agentic Strangler Fig – façade routing via new adapters; gradual traffic shift.
+Retire: Automated decommissioning with provenance proofs.
+
+ToolRegistry & ExecutionPlanner:
+Register enterprise tools + new code exec sandbox (gVisor-like isolation or Rust sandbox).
+Support MCP servers for internal systems (Postgres, Git, SAP APIs, etc.).
+
+Provenance & Trace Engine (TraceCaps v2):
+Multi-agent chronology, cryptographic signing (Ed25519) for all generated code/artifacts.
+SCITT-compatible attestations; full audit logs for EU AI Act (transparency, risk assessment).
+
+SelfValidator & Quality Gates:
+Extend with coding benchmarks (HumanEval-style enterprise tasks), functional equivalence testing, security scanning of generated code.
+
+
+Deployment Options:
+
+Single binary (core + local adapters).
+Optional sidecars: vLLM/Ollama for inference, MCP servers.
+Dell AI Factory blueprints: Pre-optimized images for NVIDIA hardware, confidential computing.
+
+3. Runtime View
+
+Typical Flow (Claude Code Enterprise Task): NL intent ("Modernize SAP work order approval") → PLANNER decomposes → ROUTER selects Claude via MCP sandbox (reasoning) + local execution → CODE/MODERNIZE agents synthesize + verify in ToolRegistry sandbox → Genesis artifact with TraceCaps → Deploy via connectors → Monitor & Retire.
+Hybrid Routing Logic: Local-first for PII/sensitive; Claude for novel reasoning (outbound-only, sanitized results only).
+Error/Recovery: Reflection loops + fallback to simpler local models.
+
+4. Deployment View
+
+Air-Gap: Bundled quantized models + offline licensing.
+Hybrid: Outbound MCP tunnels + Dell-managed on-prem.
+Scaling: Horizontal agent execution on AI Factory nodes.
+
+5. Quality Attributes (Updated & Measurable)
+
+Sovereignty/Compliance: 100% data residency options; full traceability (EU AI Act pillars).
+Performance: Quantized inference + parallel agents; benchmarks vs. baselines.
+Security: Sandboxed execution, provenance for all outputs, SemanticFirewall extensions.
+Maintainability: Hexagonal ports enable model swapping (Claude → open equivalents).
+Usability: NL interface + absorbed A2UI for generated workflows.
+
+6. Cross-Cutting Concepts
+
+Governance: All agents respect kill-switch, licensing, and policy engine.
+Observability: Extended logging with provenance Merkle roots.
+Testing: Unit (Rust), integration (sandboxed pipelines), end-to-end (enterprise scenario replay).
+
+7. Rationale & References (Academic/Industry Grounding)
+
+Sovereign/Hybrid AI: Self-hosted sandboxes + MCP for execution control.
+MAS & Agentic Modernization: VAPU-inspired verification; Agentic Strangler Fig.
+Program Synthesis: LLM agents with execution feedback for enterprise code.
+Provenance: Cryptographic binding for AI-generated assets.
+Architecture: Hexagonal for agentic systems.
+
+Implementation Roadmap (Phased, Low-Risk):
+
+MVP (Weeks): LLM adapter + CODE talent + basic MCP proxy. Test on sample SAP/Jira workflows.
+Core MAS (Months): Full Agent Council loops, absorption extensions, provenance v2.
+Production: Dell blueprints, benchmarks, enterprise pilots, partnership packaging.
+
+Open Items / Risks & Mitigations:
+
+Anthropic terms: Partnership-first (co-sell vs. direct compete); use APIs/sandboxes compliantly.
+Model quality: Hybrid + quantization; continuous validation.
+Complexity: Start with existing hexagonal patterns; incremental PRs.
+
+
+# ARCHITECTURE BLUEPRINT – Intellecta Cortex
 Source Chat: Full conversation, May 7 – June 8, 2026
 Generated: 2026‑06‑08T22:00:00Z
 Blueprint Integrity Hash: A3F2‑9C1E‑47DB‑BE06
@@ -119,77 +226,94 @@ Branching (Copy‑on‑Write / Merge‑on‑Read)	Agent‑safe data branches for
 Zero‑Trust	Seven‑layer defence‑in‑depth; no implicit trust between any two components	Security Fortress
 Domain Model
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+classDiagram
+    class Tool {
+        +String id
+        +String name
+        +String description
+        +Vec~f32~ embedding
+        +JsonValue input_schema
+        +JsonValue output_schema
+        +Option~String~ connector_id
+    }
+    
+    class DecisionTrace {
+        +Uuid trace_id
+        +Uuid user_id
+        +String intent
+        +JsonValue observation
+        +JsonValue inference
+        +String behavioral_token
+        +String source_application
+        +f64 confidence_score
+        +Vec~Uuid~ parent_ids
+    }
+    
+    class TraceCaps {
+        +Uuid id
+        +DateTime timestamp
+        +Uuid agent_id
+        +ActionKind action
+        +Vec~Uuid~ inputs
+        +Option~String~ output_hash
+        +f64 risk_score
+        +Option~Vec~u8~~ signature
+        +Vec~String~ parent_hashes
+    }
+    
+    class AbsorbedField {
+        +Uuid field_id
+        +String source_application
+        +String source_table
+        +String source_column
+        +String semantic_label
+        +String field_type
+        +i32 observation_count
+        +String absorption_status
+    }
+    
+    class BehavioralWorkflow {
+        +Uuid workflow_id
+        +Uuid user_id
+        +String source_application
+        +Vec~String~ behavioral_tokens
+        +i32 frequency
+        +bool converted_to_skill
+    }
+    
+    class SourceSystem {
+        +Uuid system_id
+        +String system_name
+        +String system_type
+        +i32 fields_discovered
+        +i32 fields_absorbed
+        +f64 absorption_pct
+        +String absorption_phase
+    }
+    
+    class Agent {
+        +String id
+        +String role
+        +String name
+        +Vec~String~ capabilities
+        +HashSet~String~ skills
+        +PerformanceMetrics performance
+        +String did
+    }
+    
+    class Connector {
+        <<trait>>
+        +name() str
+        +tools() Vec~ConnectorTool~
+        +execute(tool_name, params) Result~JsonValue, Error~
+    }
+    
+    Tool "1..*" --> "1" Connector : registered by
+    DecisionTrace "1..*" --> "1" AbsorbedField : references
+    TraceCaps "1..*" --> "0..*" TraceCaps : parent chain
+    BehavioralWorkflow "1..*" --> "0..*" Skill : crystallised into
+    SourceSystem "1" --> "1..*" AbsorbedField : contains
+    Agent "1..*" --> "1..*" Tool : uses
 
 Responsibility Allocation
 
@@ -219,37 +343,47 @@ Browser Extension	Manifest V3 (JavaScript)	Observational capture of field‑le
 Cortex Mobile (PWA)	Rust WASM + ElectricSQL CRDT	Mobile TraceDB, offline‑first decision trace capture, voice journaling	User's mobile device
 Dell AI Factory (optional)	Dell PowerEdge XE + NVIDIA NemoClaw	Validated deployment target for enterprise customers	Customer's data centre
 
+graph TB
+    subgraph CustomerInfrastructure[Customer Infrastructure]
+        CortexBinary[Cortex Binary – Rust, <10MB]
+        TraceDB[(PostgreSQL + pgvector)]
+        BrowserExt[Browser Extension – Manifest V3]
+        MobilePWA[Cortex Mobile PWA – WASM]
+    end
 
+    subgraph EnterpriseSystems[Enterprise Systems]
+        Maximo[IBM Maximo]
+        OracleEBS[Oracle EBS]
+        OracleFusion[Oracle Fusion]
+        SAP[SAP S/4HANA]
+        Salesforce[Salesforce]
+        Workday[Workday]
+        Snowflake[Snowflake]
+        Jira[Jira]
+        GitHub[GitHub]
+        Slack[Slack]
+    end
 
+    subgraph OptionalInfrastructure[Optional Infrastructure]
+        DellFactory[Dell AI Factory – PowerEdge XE]
+        SupabaseDB[Supabase – managed PostgreSQL]
+        NeonDB[Neon – serverless PostgreSQL]
+    end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    CortexBinary -->|MCP| Maximo
+    CortexBinary -->|MCP| OracleEBS
+    CortexBinary -->|MCP| SAP
+    CortexBinary -->|MCP| Salesforce
+    CortexBinary -->|MCP| Snowflake
+    CortexBinary -->|MCP| Jira
+    CortexBinary -->|MCP| GitHub
+    CortexBinary -->|MCP| Slack
+    CortexBinary -->|SQL| TraceDB
+    CortexBinary -->|optional| SupabaseDB
+    CortexBinary -->|optional| NeonDB
+    CortexBinary -->|validated on| DellFactory
+    BrowserExt -->|records fields| CortexBinary
+    MobilePWA -->|CRDT sync| CortexBinary
 
 
 Container: Cortex Binary
